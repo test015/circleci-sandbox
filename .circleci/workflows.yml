@@ -21,13 +21,15 @@ jobs:
       - run: echo "test2"
 
 workflows:
-  workflow-a:
+  build-1:
     when:
-      or: [<< pipeline.parameters.run-workflow-a >>]
+      or:
+        - << pipeline.parameters.run-workflow-a >>
     jobs:
       - buildjob
-  workflow-b:
+  build-2:
     when:
-      or: [<< pipeline.parameters.run-workflow-b >>]
+      or:
+        - << pipeline.parameters.run-workflow-b >>
     jobs:
       - buildjob2
