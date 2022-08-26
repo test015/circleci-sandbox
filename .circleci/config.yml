@@ -1,0 +1,36 @@
+version: 2.1
+setup: true
+orbs:
+  path-filtering: circleci/path-filtering@0.1.1
+  continuation: circleci/continuation@0.2.0
+
+parameters:
+  manual-workflow-a:
+    type: boolean
+    default: false
+  manual-workflow-b:
+    type: boolean
+    default: false
+
+workflows:
+  setup:
+    unless:
+      or: [<< pipeline.parameters.manual-workflow-a >>, << pipeline.parameters.manual-workflow-a >>]
+    jobs:
+      - path-filtering/filter:
+          base-revision: << pipeline.git.branch >>
+          config-path: .circleci/workflows.yml
+          mapping: |
+            dir_a/.* run-workflow-a true
+            dir_b/.* run-workflow-b true
+  setup-manual:
+    when:
+      or: [<< pipeline.parameters.manual-workflow-a >>, << pipeline.parameters.manual-workflow-a >>]
+    jobs:
+      - continuation/continue:
+          configuration_path: .circleci/workflows.yml
+          parameters: /tmp/pipeline-parameters.json
+          pre-steps:
+            - run:
+                command: |
+                  echo '{ "run-workflow-a": << pipeline.parameters.manual-workflow-a >>, "run-workflow-b": << pipeline.parameters.manual-workflow-b >> }' >> /tmp/pipeline-parameters.json
