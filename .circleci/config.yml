@@ -14,8 +14,6 @@ parameters:
 
 workflows:
   setup:
-    unless:
-      or: [<< pipeline.parameters.manual-workflow-a >>, << pipeline.parameters.manual-workflow-a >>]
     jobs:
       - path-filtering/filter:
           base-revision: << pipeline.git.branch >>
