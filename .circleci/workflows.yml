@@ -19,6 +19,8 @@ jobs:
       - image: cimg/base:2022.01
     steps:
       - run: echo "test2"
+  all-ok:
+    requires[buildjob, buildjob2]
 
 workflows:
   build-1:
@@ -38,5 +40,3 @@ workflows:
 #        - << pipeline.parameters.run-workflow-b >>
     jobs:
       - buildjob2
-      - all-ok:
-          requires[buildjob1]
