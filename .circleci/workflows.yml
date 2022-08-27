@@ -38,3 +38,5 @@ workflows:
 #        - << pipeline.parameters.run-workflow-b >>
     jobs:
       - buildjob2
+      - all-ok:
+          requires[build-1]
