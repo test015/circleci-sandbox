@@ -20,9 +20,11 @@ jobs:
     steps:
       - run: echo "test2"
   all-ok:
-    requires[buildjob, buildjob2]
+    requires:
+      - buildjob
 
-workflows:
+
+    workflows:
   build-1:
     when:
       or:
