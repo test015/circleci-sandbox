@@ -28,8 +28,13 @@ workflows:
     jobs:
       - buildjob
   build-2:
+
     when:
-      or:
-        - << pipeline.parameters.run-workflow-b >>
+        and:
+            - << pipeline.parameters.run-workflow-b >>
+            - not: << pipeline.parameters.run-workflow-a >>
+#    when:
+#      or:
+#        - << pipeline.parameters.run-workflow-b >>
     jobs:
       - buildjob2
