@@ -19,12 +19,9 @@ jobs:
       - image: cimg/base:2022.01
     steps:
       - run: echo "test2"
-  all-ok:
-    requires:
-      - buildjob
 
 
-    workflows:
+workflows:
   build-1:
     when:
       or:
@@ -34,12 +31,7 @@ jobs:
   build-2:
 
     when:
-        and:
-            - << pipeline.parameters.run-workflow-b >>
-            - not: << pipeline.parameters.run-workflow-a >>
-#    when:
-#      or:
-#        - << pipeline.parameters.run-workflow-b >>
+      or:
+        - << pipeline.parameters.run-workflow-b >>
     jobs:
       - buildjob2
-      - all-ok
