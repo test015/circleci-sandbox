@@ -1,0 +1,23 @@
+version: 2.1
+setup: true
+orbs:
+  path-filtering: circleci/path-filtering@0.1.1
+  continuation: circleci/continuation@0.2.0
+
+parameters:
+  run-workflow-a:
+    type: boolean
+    default: false
+  run-workflow-b:
+    type: boolean
+    default: false
+
+workflows:
+  setup:
+    jobs:
+      - path-filtering/filter:
+          base-revision: << pipeline.git.branch >>
+          config-path: .circleci/workflows.yml
+          mapping: |
+            dir_a/.* run-workflow-a true
+            dir_b/.* run-workflow-b true
