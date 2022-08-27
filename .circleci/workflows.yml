@@ -39,4 +39,4 @@ workflows:
     jobs:
       - buildjob2
       - all-ok:
-          requires[build-1]
+          requires[buildjob1]
